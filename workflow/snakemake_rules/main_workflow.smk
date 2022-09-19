@@ -534,7 +534,7 @@ rule diagnostic:
     output:
         to_exclude = "results/{build_name}/excluded_by_diagnostics.txt"
     params:
-        clock_filter = 20,
+        clock_filter = 20, 
         snp_clusters = 1,
         contamination = 5,
         skip_inputs_arg=_get_skipped_inputs_for_diagnostic,
@@ -550,12 +550,13 @@ rule diagnostic:
         """
         python3 scripts/diagnostic.py \
             --metadata {input.metadata} \
-            --clock-filter {params.clock_filter} \
             --contamination {params.contamination} \
             --snp-clusters {params.snp_clusters} \
+            --clock-filter {params.clock_filter} \
             {params.skip_inputs_arg} \
             --output-exclusion-list {output.to_exclude} 2>&1 | tee {log}
         """
+
 
 def _collect_exclusion_files(wildcards):
     # This rule creates a per-input exclude file for `rule filter`. This file contains one or both of the following:
@@ -749,6 +750,7 @@ if "run_pangolin" in config and config["run_pangolin"]:
             """
             python3 scripts/make_pangolin_node_data.py \
             --pangolineages {input.lineages} \
+            --attribute_name pango_lineage_local \
             --node_data_outfile {output.node_data} 2>&1 | tee {log}\
             """
 

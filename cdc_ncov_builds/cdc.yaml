@@ -1,0 +1,31 @@
+inputs:
+  - name: "reference_data"
+    metadata: "https://data.nextstrain.org/files/ncov/open/reference/metadata.tsv.xz"
+    sequences: "https://data.nextstrain.org/files/ncov/open/reference/sequences.fasta.xz"
+  - name: "world_subsample"
+    metadata: "https://data.nextstrain.org/files/ncov/open/global/metadata.tsv.xz"
+    sequences: "https://data.nextstrain.org/files/ncov/open/global/sequences.fasta.xz"
+  - name: "cdc_data"
+    metadata: "data/cdc.metadata.tsv"
+    sequences: "data/cdc.sequences.fasta"
+
+refine:
+  root: "Wuhan-Hu-1/2019"
+  keep_polytomies: True
+
+run_pangolin: True
+
+diagnostic:
+  skip_diagnostics: True
+
+filter: 
+  skip_diagnostics: True
+
+builds:
+  custom-build:
+    title: "CDC Build"
+    subsampling_scheme: all
+    auspice_config: cdc_ncov_builds/auspice-cdc-full-config.json
+
+files:
+  description: cdc_ncov_builds/description.md
